@@ -1,3 +1,8 @@
+const body = document.querySelector("body");
+const container = document.createElement("div");
+
+body.appendChild(container);
+
 const myLibrary = [];
 
 function Book(title, author, pages, read, uuid) {
@@ -35,4 +40,9 @@ addBookToLibrary(
    true,
    crypto.randomUUID(),
 );
-console.log(myLibrary);
+
+myLibrary.forEach((item) => {
+   const card = document.createElement("div");
+   card.textContent = `책 제목: ${item.title} | 저자: ${item.author} | 페이지 수: ${item.pages} | 읽은 여부: ${item.read} | 책 고유 ID: ${item.uuid}`;
+   container.appendChild(card);
+});
