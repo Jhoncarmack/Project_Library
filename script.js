@@ -44,7 +44,13 @@ const displayBooks = function () {
    container.textContent = "";
    myLibrary.forEach((item) => {
       const card = document.createElement("div");
-      card.textContent = `책 제목: ${item.title} | 저자: ${item.author} | 페이지 수: ${item.pages} | 읽은 여부: ${item.read} | 책 고유 ID: ${item.uuid}`;
+      const bookInfo = document.createElement("div");
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "삭제";
+      card.classList.add("card");
+      bookInfo.textContent = `책 제목: ${item.title} | 저자: ${item.author} | 페이지 수: ${item.pages} | 읽은 여부: ${item.read} | 책 고유 ID: ${item.uuid}`;
+      card.appendChild(bookInfo);
+      card.appendChild(removeButton);
       container.appendChild(card);
    });
 };
