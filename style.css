@@ -79,3 +79,7 @@ body {
 .book_data {
    outline: solid black;
 }
+.card {
+   display: flex;
+   gap: 10px;
+}
