@@ -1,7 +1,35 @@
+const favDialog = document.getElementById("favDialog");
+const confirmBtn = document.getElementById("confirmBtn");
+const showDialog = document.getElementById("showDialog");
+const cancel = document.querySelector('button[value="cancel"]');
+const book_title = document.getElementById("book-title");
+const book_author = document.getElementById("book-author");
+const book_pages = document.getElementById("book-pages");
+const book_read = document.getElementById("book-read");
+
+showDialog.addEventListener("click", () => {
+   favDialog.showModal();
+});
+cancel.addEventListener("click", () => {
+   favDialog.close();
+});
+confirmBtn.addEventListener("click", (event) => {
+   event.preventDefault();
+   addBookToLibrary(
+      book_title.value,
+      book_author.value,
+      book_pages.value,
+      book_read.value,
+      crypto.randomUUID(),
+   );
+
+   displayBooks();
+});
+
 const body = document.querySelector("body");
 const container = document.createElement("div");
-
-body.appendChild(container);
+container.classList.add("book_data");
+body.prepend(container);
 
 const myLibrary = [];
 
@@ -12,6 +40,15 @@ function Book(title, author, pages, read, uuid) {
    this.read = read;
    this.uuid = uuid;
 }
+const displayBooks = function () {
+   container.textContent = "";
+   myLibrary.forEach((item) => {
+      const card = document.createElement("div");
+      card.textContent = `책 제목: ${item.title} | 저자: ${item.author} | 페이지 수: ${item.pages} | 읽은 여부: ${item.read} | 책 고유 ID: ${item.uuid}`;
+      container.appendChild(card);
+   });
+};
+
 function addBookToLibrary(
    add_title,
    add_author,
@@ -41,8 +78,4 @@ addBookToLibrary(
    crypto.randomUUID(),
 );
 
-myLibrary.forEach((item) => {
-   const card = document.createElement("div");
-   card.textContent = `책 제목: ${item.title} | 저자: ${item.author} | 페이지 수: ${item.pages} | 읽은 여부: ${item.read} | 책 고유 ID: ${item.uuid}`;
-   container.appendChild(card);
-});
+displayBooks();

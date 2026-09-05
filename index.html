@@ -8,5 +8,52 @@
    </head>
    <body>
       <script src="script.js" defer></script>
+      <dialog id="favDialog">
+         <form>
+            <p>
+               <label for="book-title"> 책 제목: </label>
+               <input
+                  type="text"
+                  id="book-title"
+                  name="book-title"
+                  placeholder="이과형 두뇌 학습"
+               />
+            </p>
+            <p>
+               <label for="book-author"> 저자: </label>
+               <input
+                  type="text"
+                  id="book-author"
+                  name="book-author"
+                  placeholder="바버라 오클리"
+               />
+            </p>
+            <p>
+               <label for="book-pages"> 페이지 수: </label>
+               <input
+                  type="text"
+                  id="book-pages"
+                  name="book-pages"
+                  placeholder="123"
+               />
+            </p>
+            <p>
+               <label for="book-read"> 읽은 여부: </label>
+               <input
+                  type="text"
+                  id="book-read"
+                  name="book-read"
+                  placeholder="true or false"
+               />
+            </p>
+            <div>
+               <button value="cancel" formmethod="dialog">취소</button>
+               <button id="confirmBtn" value="default">확인</button>
+            </div>
+         </form>
+      </dialog>
+      <p>
+         <button id="showDialog">책 추가 상자 표시</button>
+      </p>
    </body>
 </html>
