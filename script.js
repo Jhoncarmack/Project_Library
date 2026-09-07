@@ -31,7 +31,7 @@ const container = document.createElement("div");
 container.classList.add("book_data");
 body.prepend(container);
 
-const myLibrary = [];
+let myLibrary = [];
 
 function Book(title, author, pages, read, uuid) {
    this.title = title;
@@ -49,9 +49,20 @@ const displayBooks = function () {
       removeButton.textContent = "삭제";
       card.classList.add("card");
       bookInfo.textContent = `책 제목: ${item.title} | 저자: ${item.author} | 페이지 수: ${item.pages} | 읽은 여부: ${item.read} | 책 고유 ID: ${item.uuid}`;
+
       card.appendChild(bookInfo);
       card.appendChild(removeButton);
       container.appendChild(card);
+
+      card.dataset.id = item.uuid;
+
+      removeButton.addEventListener("click", () => {
+         const afterLibrary = myLibrary.filter((book) => {
+            return book.uuid !== card.dataset.id;
+         });
+         myLibrary = afterLibrary;
+         displayBooks();
+      });
    });
 };
 
