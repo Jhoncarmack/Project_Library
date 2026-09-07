@@ -40,32 +40,6 @@ function Book(title, author, pages, read, uuid) {
    this.read = read;
    this.uuid = uuid;
 }
-const displayBooks = function () {
-   container.textContent = "";
-   myLibrary.forEach((item) => {
-      const card = document.createElement("div");
-      const bookInfo = document.createElement("div");
-      const removeButton = document.createElement("button");
-      removeButton.textContent = "삭제";
-      card.classList.add("card");
-      bookInfo.textContent = `책 제목: ${item.title} | 저자: ${item.author} | 페이지 수: ${item.pages} | 읽은 여부: ${item.read} | 책 고유 ID: ${item.uuid}`;
-
-      card.appendChild(bookInfo);
-      card.appendChild(removeButton);
-      container.appendChild(card);
-
-      card.dataset.id = item.uuid;
-
-      removeButton.addEventListener("click", () => {
-         const afterLibrary = myLibrary.filter((book) => {
-            return book.uuid !== card.dataset.id;
-         });
-         myLibrary = afterLibrary;
-         displayBooks();
-      });
-   });
-};
-
 function addBookToLibrary(
    add_title,
    add_author,
@@ -76,6 +50,43 @@ function addBookToLibrary(
    const book = new Book(add_title, add_author, add_pages, add_read, add_uuid);
    myLibrary.push(book);
 }
+
+Book.prototype.readToggle = function () {
+   this.read = !this.read;
+};
+
+const displayBooks = function () {
+   container.textContent = "";
+   myLibrary.forEach((book) => {
+      const card = document.createElement("div");
+      const bookInfo = document.createElement("div");
+      const removeButton = document.createElement("button");
+      const readToggleButton = document.createElement("button");
+      removeButton.textContent = "삭제";
+      readToggleButton.textContent = "읽음 여부 변경";
+      card.classList.add("card");
+      bookInfo.textContent = `책 제목: ${book.title} | 저자: ${book.author} | 페이지 수: ${book.pages} | 읽은 여부: ${book.read} | 책 고유 ID: ${book.uuid}`;
+
+      card.appendChild(bookInfo);
+      card.appendChild(removeButton);
+      card.appendChild(readToggleButton);
+      container.appendChild(card);
+
+      card.dataset.id = book.uuid;
+
+      removeButton.addEventListener("click", () => {
+         const afterLibrary = myLibrary.filter((book) => {
+            return book.uuid !== card.dataset.id;
+         });
+         myLibrary = afterLibrary;
+         displayBooks();
+      });
+      readToggleButton.addEventListener("click", () => {
+         book.readToggle();
+         displayBooks();
+      });
+   });
+};
 
 addBookToLibrary(
    "생각의 탄생",
