@@ -1,84 +1,107 @@
 const favDialog = document.getElementById("favDialog");
+const cancelDialog = document.getElementById("cancelBtn");
 const confirmBtn = document.getElementById("confirmBtn");
 const showDialog = document.getElementById("showDialog");
-const cancel = document.querySelector('button[value="cancel"]');
-const book_title = document.getElementById("book-title");
-const book_author = document.getElementById("book-author");
-const book_pages = document.getElementById("book-pages");
-const book_read = document.getElementById("book-read");
+const bookTitle = document.getElementById("book-title");
+const bookAuthor = document.getElementById("book-author");
+const bookRead = document.getElementById("book-read");
+const bookPages = document.getElementById("book-pages");
+
+const bookView = document.querySelector(".book-list");
+
+let myLibrary = [];
 
 showDialog.addEventListener("click", () => {
    favDialog.showModal();
 });
-cancel.addEventListener("click", () => {
+cancelDialog.addEventListener("click", () => {
    favDialog.close();
 });
+
 confirmBtn.addEventListener("click", (event) => {
    event.preventDefault();
    addBookToLibrary(
-      book_title.value,
-      book_author.value,
-      book_pages.value,
-      book_read.value,
+      bookTitle.value,
+      bookAuthor.value,
+      bookRead.value,
+      bookPages.value,
       crypto.randomUUID(),
    );
-
    displayBooks();
 });
-
-const body = document.querySelector("body");
-const container = document.createElement("div");
-container.classList.add("book_data");
-body.prepend(container);
-
-let myLibrary = [];
-
-function Book(title, author, pages, read, uuid) {
+function Book(title, author, read, pages, uuid) {
    this.title = title;
    this.author = author;
-   this.pages = pages;
    this.read = read;
+   this.pages = pages;
    this.uuid = uuid;
 }
-function addBookToLibrary(
-   add_title,
-   add_author,
-   add_pages,
-   add_read,
-   add_uuid,
-) {
-   const book = new Book(add_title, add_author, add_pages, add_read, add_uuid);
-   myLibrary.push(book);
-}
-
 Book.prototype.readToggle = function () {
    this.read = !this.read;
 };
+function addBookToLibrary(
+   bookTitle,
+   bookAuthor,
+   bookRead,
+   bookPages,
+   bookUuid,
+) {
+   const addBook = new Book(
+      bookTitle,
+      bookAuthor,
+      bookRead,
+      bookPages,
+      bookUuid,
+   );
+   myLibrary.push(addBook);
+}
+
+addBookToLibrary(
+   "달빛 도서관의 비밀",
+   "김민서",
+   true,
+   320,
+   crypto.randomUUID(),
+);
+addBookToLibrary(
+   "AI 시대의 생존 전략",
+   "David Park",
+   false,
+   440,
+   crypto.randomUUID(),
+);
+addBookToLibrary(
+   "방구석 세계 여행 가이드",
+   "이한결",
+   true,
+   246,
+   crypto.randomUUID(),
+);
 
 const displayBooks = function () {
-   container.textContent = "";
+   bookView.textContent = "";
    myLibrary.forEach((book) => {
-      const card = document.createElement("div");
-      const bookInfo = document.createElement("div");
-      const removeButton = document.createElement("button");
-      const readToggleButton = document.createElement("button");
-      removeButton.textContent = "삭제";
-      readToggleButton.textContent = "읽음 여부 변경";
-      card.classList.add("card");
-      bookInfo.textContent = `책 제목: ${book.title} | 저자: ${book.author} | 페이지 수: ${book.pages} | 읽은 여부: ${book.read} | 책 고유 ID: ${book.uuid}`;
+      const info = document.createElement("div");
 
-      card.appendChild(bookInfo);
+      info.classList.add("book-info");
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "삭제";
+      const readToggleButton = document.createElement("button");
+      readToggleButton.textContent = "읽기 여부 변경";
+      const card = document.createElement("div");
+      card.appendChild(info);
       card.appendChild(removeButton);
       card.appendChild(readToggleButton);
-      container.appendChild(card);
+      card.classList.add("book-card");
+      info.dataset.id = book.uuid;
 
-      card.dataset.id = book.uuid;
-
+      info.textContent = `${book.title} ${book.author} ${book.read} ${book.pages} ${book.uuid}`;
+      bookView.appendChild(card);
       removeButton.addEventListener("click", () => {
-         const afterLibrary = myLibrary.filter((book) => {
-            return book.uuid !== card.dataset.id;
+         const afterRemove = myLibrary.filter((book) => {
+            return info.dataset.id !== book.uuid;
          });
-         myLibrary = afterLibrary;
+         myLibrary = afterRemove;
          displayBooks();
       });
       readToggleButton.addEventListener("click", () => {
@@ -87,23 +110,5 @@ const displayBooks = function () {
       });
    });
 };
-
-addBookToLibrary(
-   "생각의 탄생",
-   "로버트 루트번스타인",
-   456,
-   true,
-   crypto.randomUUID(),
-);
-
-addBookToLibrary("사피엔스", "유발 하라리", 636, false, crypto.randomUUID());
-
-addBookToLibrary(
-   "미드나잇 라이브러리",
-   "매트 헤이그",
-   400,
-   true,
-   crypto.randomUUID(),
-);
 
 displayBooks();

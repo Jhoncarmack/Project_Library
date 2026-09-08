@@ -76,17 +76,15 @@ h6 {
 body {
    padding: 10px;
 }
-.book_data {
-   outline: solid black;
-}
-.card {
-   display: flex;
-   gap: 10px;
-}
-.book_data {
+.book-list {
+   border: 1px solid black;
    display: flex;
    flex-direction: column;
    gap: 10px;
    padding: 10px;
-   margin-bottom: 20px;
+   margin-bottom: 10px;
+}
+.book-card {
+   display: flex;
+   gap: 10px;
 }

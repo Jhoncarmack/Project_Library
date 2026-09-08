@@ -8,6 +8,7 @@
    </head>
    <body>
       <script src="script.js" defer></script>
+      <div class="book-list"></div>
       <dialog id="favDialog">
          <form>
             <p>
@@ -28,15 +29,7 @@
                   placeholder="바버라 오클리"
                />
             </p>
-            <p>
-               <label for="book-pages"> 페이지 수: </label>
-               <input
-                  type="text"
-                  id="book-pages"
-                  name="book-pages"
-                  placeholder="123"
-               />
-            </p>
+
             <p>
                <label for="book-read"> 읽은 여부: </label>
                <input
@@ -46,8 +39,19 @@
                   placeholder="true or false"
                />
             </p>
+            <p>
+               <label for="book-pages"> 페이지 수: </label>
+               <input
+                  type="text"
+                  id="book-pages"
+                  name="book-pages"
+                  placeholder="123"
+               />
+            </p>
             <div>
-               <button value="cancel" formmethod="dialog">취소</button>
+               <button value="cancel" formmethod="dialog" id="cancelBtn">
+                  취소
+               </button>
                <button id="confirmBtn" value="default">확인</button>
             </div>
          </form>
