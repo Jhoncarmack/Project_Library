@@ -29,16 +29,20 @@ confirmBtn.addEventListener("click", (event) => {
    );
    displayBooks();
 });
-function Book(title, author, read, pages, uuid) {
-   this.title = title;
-   this.author = author;
-   this.read = read;
-   this.pages = pages;
-   this.uuid = uuid;
+
+class Book {
+   constructor(title, author, read, pages, uuid) {
+      this.title = title;
+      this.author = author;
+      this.read = read;
+      this.pages = pages;
+      this.uuid = uuid;
+   }
+   readToggle() {
+      this.read = !this.read;
+   }
 }
-Book.prototype.readToggle = function () {
-   this.read = !this.read;
-};
+
 function addBookToLibrary(
    bookTitle,
    bookAuthor,
